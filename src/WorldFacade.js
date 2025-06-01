@@ -52,7 +52,7 @@ class WorldFacade {
 			throw new Error('Config options should be an object. Config reference: https://fantasticdice.games/docs/usage/config#configuration-options')
 		}
 		// pull out callback functions from options
-		const { onCollision, onBeforeRoll, onDieComplete, onRollComplete, onRemoveComplete, onThemeConfigLoaded, onThemeLoaded, ...boxOptions } = options
+		const { onCollision, onBeforeRoll, onDieComplete, onRollComplete, onRemoveComplete, onThemeConfigLoaded, onThemeLoaded, onDieClick, ...boxOptions } = options
 
 		// extend defaults with options
 		this.config = {...defaultOptions, ...boxOptions}
@@ -65,7 +65,7 @@ class WorldFacade {
 		this.onThemeLoaded = options.onThemeLoaded || this.noop
 		this.onThemeConfigLoaded = options.onThemeConfigLoaded || this.noop
 		this.onCollision = options.onCollision || this.noop; // Add the new collision callback
-
+		this.onDieClick = options.onDieClick || this.noop;
 
 		// is webGL supported?
 		if(webgl_support()){
@@ -124,6 +124,7 @@ class WorldFacade {
 			this.#DiceWorld = new WorldOnscreen({
 				canvas: this.canvas,
 				options: this.config,
+				onDieClick: this.onDieClick,
 				onInitComplete
 			})
 		}

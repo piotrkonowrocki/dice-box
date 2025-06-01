@@ -158,7 +158,7 @@ class Dice {
         model.setEnabled(false)
         model.freezeNormals()
         model.freezeWorldMatrix()
-        model.isPickable = false
+        model.isPickable = true
         model.doNotSyncBoundingInfo = true
         // model.scaling = new Vector3(model.scaling)
         // prefix all the meshes ids from this file with the file name so we can find them later e.g.: 'default-dice_d10' and 'default-dice_d10_collider'

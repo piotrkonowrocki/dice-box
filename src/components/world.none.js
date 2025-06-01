@@ -15,6 +15,7 @@ class WorldNone {
 		this.onRollResult = options.onRollResult || this.noop
 		this.onRollComplete = options.onRollComplete || this.noop
 		this.onDieRemoved = options.onDieRemoved || this.noop
+		this.onDieClick = options.onDieClick || this.noop
 		this.initialized = this.initScene(options)
 	}
 

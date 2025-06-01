@@ -32,6 +32,7 @@ class WorldOnscreen {
 		this.onRollResult = options.onRollResult || this.noop
 		this.onRollComplete = options.onRollComplete || this.noop
 		this.onDieRemoved = options.onDieRemoved || this.noop
+		this.onDieClick = options.onDieClick || this.noop
 		this.initialized = this.initScene(options)
 	}
 	
@@ -64,6 +65,17 @@ class WorldOnscreen {
 		})
 		
 		this.#themeLoader = new ThemeLoader({scene: this.#scene})
+
+		this.#canvas.addEventListener("pointerdown", (evt) => {
+			const rect = this.#canvas.getBoundingClientRect();
+			const x = (evt.clientX - rect.left) * window?.devicePixelRatio ?? 1;
+			const y = (evt.clientY - rect.top) * window?.devicePixelRatio ?? 1;
+		
+			const pickResult = this.#scene.pick(x, y);
+			if (pickResult.hit && pickResult.pickedMesh?.name !== 'ground') {
+				this.onDieClick(parseInt(pickResult.pickedMesh?.name.replace(/^.*-/, ''), 10))
+			}
+		});
 
 		// init complete - let the world know
 		this.onInitComplete()
